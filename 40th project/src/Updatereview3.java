@@ -22,8 +22,8 @@ import java.util.ArrayList;
 
 
 
-@WebServlet("/Rest")
-public class Rest extends HttpServlet {
+@WebServlet("/Updatereview3")
+public class Updatereview3 extends HttpServlet {
 	
 	
 	  public void init() throws ServletException
@@ -37,31 +37,20 @@ public class Rest extends HttpServlet {
 	            throws ServletException, IOException
 	  {
 		  	
-		  	
-		  	String temp_rid = request.getParameter("id");
-		  	int rid = 0;
-		  	if(temp_rid != null)
-		  	{
-		  		rid = Integer.parseInt(temp_rid);
-		  	}
-			String rname = request.getParameter("nname");
-			String radd = request.getParameter("nadd");
-		  	
-			//System.out.println(rid);
-			//System.out.println(rname);
-			//System.out.println(radd);
-		  	
-		  	
-			
-			
-			//if(email != null)
-		
 			HttpSession session = request.getSession();
 			
+			String curuser = (String) session.getAttribute("curuser");
+			int currest = (Integer) session.getAttribute("creview");
+			
+			String ncomment = request.getParameter("ncomment");
+			String temp_nrating = request.getParameter("nrating");
+			double nrating = Double.parseDouble(temp_nrating);
+			
+			//System.out.println(curuser + " " + currest + " " + ncomment + " " + nrating);
+			//String rests = "";
 			
 			
-		  
-		  try
+			try
 			{
 		    	Class.forName("oracle.jdbc.driver.OracleDriver");
 				
@@ -76,59 +65,38 @@ public class Rest extends HttpServlet {
 		    	
 		    	Connection conn = DriverManager.getConnection(url,props);
 
-				//String sql ="INSERT INTO students (ID, ASSIGNMENT, ATYPE, ADATE, GRADE) " + "VALUES (?, ?, ?, TO_DATE(?,'YYYY/MM/DD'), ?)";
-
-		    	String sql = "select * from rests where rid = ?";
 		    	
+		    	String rid = curuser + currest;
+		    	
+		    	String sql = "update reviews set rcomment = ?, rating = ? where rid = ?";
 				PreparedStatement preStatement = conn.prepareStatement(sql);
-
-				preStatement.setInt(1,rid);
+				preStatement.setString(1,ncomment);
+				preStatement.setDouble(2,nrating);
+				preStatement.setString(3, rid);
+				preStatement.executeQuery();
 				
-				ResultSet result;
-				result = preStatement.executeQuery();
-				
-				
-				if(result.next())
-				{
-					if(!rname.isEmpty())
-					{
-						String sql2 = "update rests set rname = ? where rid = ?";
-						PreparedStatement preStatement2 = conn.prepareStatement(sql2);
-						preStatement2.setString(1, rname);
-						preStatement2.setInt(2, rid);
-						preStatement2.executeQuery();
-					}
-					
-					if(!radd.isEmpty())
-					{
-						String sql2 = "update rests set raddress = ? where rid = ?";
-						PreparedStatement preStatement2 = conn.prepareStatement(sql2);
-						preStatement2.setString(1, radd);
-						preStatement2.setInt(2, rid);
-						preStatement2.executeQuery();
-					}
-					
 		
-			     conn.close();
-				}
+				conn.close();
+				
 			}
 		  
 		    catch (Exception e)
 			{
 				e.printStackTrace();
 			}
-		  
-		  	
-		  
-		  
-		  
-		  
+				
+			
+			
+			
+			
 		  
 	      // Set response content type
 	      response.setContentType("text/html");
 	      
-	     // request.setAttribute("welcome", welcome);
-	     // request.setAttribute("rlist", rlist);
+
+	    //  request.setAttribute("rests", rests);
+	    
+		        
 	      
 	      getServletContext()
 	      	.getRequestDispatcher("/home.jsp")
@@ -145,7 +113,7 @@ public class Rest extends HttpServlet {
 
 	   public void destroy() 
 	   { 
-		   
+	     
 	   } 
 
 }

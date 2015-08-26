@@ -12,21 +12,18 @@
 
 <div class="container">
  <div class="jumbotron">
-    <h1 align="center">Welcome!</h1>      
-    <p align="center"> ${welcome}</p>
+    <h1 align="center">Update review</h1>      
+    <p align="center"> Pick any of the restaurants that you have previously reviewed</p>
   </div>
   
   <h2>The Restaurants</h2>
   <ul class="list-group">
-    <li class="list-group-item">${rlist}</li>
+    <li class="list-group-item">${rests}</li>
   </ul>
   
   
   <br><br>
-  <a href="Updateuserdisp.jsp" class="btn btn-info" role="button">Update Your email</a>
-  
-  <br><br>
-  <a href="Updatereview" class="btn btn-info" role="button">Update Your reviews</a>
+  <a href="Userview" class="btn btn-info" role="button">Back to your page</a>
   
 </div>
 </body>

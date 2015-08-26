@@ -74,7 +74,7 @@ public class Userview extends HttpServlet {
 				int currest =  (int) session.getAttribute("currest");
 				usr =  (String) session.getAttribute("curuser");
 				
-				String rid = usr+currest;
+				String rid = currest+usr;
 				
 				  try
 					{

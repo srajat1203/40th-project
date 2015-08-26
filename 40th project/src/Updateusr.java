@@ -22,8 +22,8 @@ import java.util.ArrayList;
 
 
 
-@WebServlet("/Rest")
-public class Rest extends HttpServlet {
+@WebServlet("/Updateusr")
+public class Updateusr extends HttpServlet {
 	
 	
 	  public void init() throws ServletException
@@ -37,30 +37,17 @@ public class Rest extends HttpServlet {
 	            throws ServletException, IOException
 	  {
 		  	
-		  	
-		  	String temp_rid = request.getParameter("id");
-		  	int rid = 0;
-		  	if(temp_rid != null)
-		  	{
-		  		rid = Integer.parseInt(temp_rid);
-		  	}
-			String rname = request.getParameter("nname");
-			String radd = request.getParameter("nadd");
-		  	
-			//System.out.println(rid);
-			//System.out.println(rname);
-			//System.out.println(radd);
-		  	
-		  	
-			
-			
-			//if(email != null)
-		
 			HttpSession session = request.getSession();
 			
+			String curuser = (String) session.getAttribute("curuser");
+			
+			String nuser = request.getParameter("nemail");
+			
+			//System.out.println(curuser + " " + nuser);
 			
 			
-		  
+			
+			
 		  try
 			{
 		    	Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -76,41 +63,32 @@ public class Rest extends HttpServlet {
 		    	
 		    	Connection conn = DriverManager.getConnection(url,props);
 
-				//String sql ="INSERT INTO students (ID, ASSIGNMENT, ATYPE, ADATE, GRADE) " + "VALUES (?, ?, ?, TO_DATE(?,'YYYY/MM/DD'), ?)";
-
-		    	String sql = "select * from rests where rid = ?";
-		    	
-				PreparedStatement preStatement = conn.prepareStatement(sql);
-
-				preStatement.setInt(1,rid);
-				
-				ResultSet result;
-				result = preStatement.executeQuery();
-				
-				
-				if(result.next())
-				{
-					if(!rname.isEmpty())
-					{
-						String sql2 = "update rests set rname = ? where rid = ?";
-						PreparedStatement preStatement2 = conn.prepareStatement(sql2);
-						preStatement2.setString(1, rname);
-						preStatement2.setInt(2, rid);
-						preStatement2.executeQuery();
-					}
+		    	if(!nuser.isEmpty())
+		    	{	
+		    		String sql = "update users set uemail = ? where uemail = ?";
+					PreparedStatement preStatement = conn.prepareStatement(sql);
+					preStatement.setString(1,nuser);
+					preStatement.setString(2,curuser);
+					preStatement.executeQuery();
 					
-					if(!radd.isEmpty())
-					{
-						String sql2 = "update rests set raddress = ? where rid = ?";
-						PreparedStatement preStatement2 = conn.prepareStatement(sql2);
-						preStatement2.setString(1, radd);
-						preStatement2.setInt(2, rid);
-						preStatement2.executeQuery();
-					}
+					String sql2 = "update reviews set user_id = ? where user_id = ?";
+					PreparedStatement preStatement2 = conn.prepareStatement(sql2);
+					preStatement2.setString(1,nuser);
+					preStatement2.setString(2,curuser);
+					preStatement2.executeQuery();
 					
+					String sql3 = "update reviews set rid = user_id||rest_id where user_id = ? ";
+					PreparedStatement preStatement3 = conn.prepareStatement(sql3);
+					preStatement3.setString(1,nuser);
+					preStatement3.executeQuery();
+					
+		    	}
+				
+				
+				
 		
-			     conn.close();
-				}
+				conn.close();
+				
 			}
 		  
 		    catch (Exception e)
@@ -118,7 +96,7 @@ public class Rest extends HttpServlet {
 				e.printStackTrace();
 			}
 		  
-		  	
+		  
 		  
 		  
 		  
@@ -127,8 +105,10 @@ public class Rest extends HttpServlet {
 	      // Set response content type
 	      response.setContentType("text/html");
 	      
-	     // request.setAttribute("welcome", welcome);
-	     // request.setAttribute("rlist", rlist);
+
+	    //  request.setAttribute("name", name);
+	    
+		        
 	      
 	      getServletContext()
 	      	.getRequestDispatcher("/home.jsp")
@@ -145,7 +125,7 @@ public class Rest extends HttpServlet {
 
 	   public void destroy() 
 	   { 
-		   
+	     
 	   } 
 
 }

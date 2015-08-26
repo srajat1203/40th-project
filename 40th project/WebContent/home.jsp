@@ -33,23 +33,10 @@
   </form>
   
   
-<br><br>
-  <h2>Change Restaurant name</h2>  
-  <form role="form" action="Rest" method = "post">
-    <div class="form-group">
-      <label for="id">ID:</label>
-      <input type="number" class="form-control" id="id" name="id" placeholder="Enter restaurant id">
-    </div>
-    <div class="form-group">
-      <label for="nname">New name:</label>
-      <input type="text" class="form-control" id="nname" name="nname" placeholder="Enter new restaurant name">
-    </div>
-    <div class="form-group">
-      <label for="nadd">New address:</label>
-      <input type="text" class="form-control" id="nadd" name="nadd" placeholder="Enter new restaurant address">
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
-  </form>
+  <br><br>
+  <a href="Restdisp.jsp" class="btn btn-info" role="button">Update Restaurant</a>
+  
+
   	
 
     
