@@ -56,12 +56,22 @@ public class Userview extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			
+			String fromupdatereview3 = (String) session.getAttribute("fromupdatereview3");
+			if(fromupdatereview3 == null)
+			{
+				fromupdatereview3 = "zero";
+			}
+			//System.out.println(fromupdatereview3);
+			
 			if(email != null)
 			{
 				session.setAttribute("curuser", email);
 				usr =  (String) session.getAttribute("curuser");
 			}
-			else
+			
+			
+			
+			else if(!fromupdatereview3.equalsIgnoreCase("one"))
 			{
 				String date = request.getParameter("date");
 				String comment = request.getParameter("comment");
@@ -74,7 +84,7 @@ public class Userview extends HttpServlet {
 				int currest =  (int) session.getAttribute("currest");
 				usr =  (String) session.getAttribute("curuser");
 				
-				String rid = currest+usr;
+				String rid = usr + currest;
 				
 				  try
 					{
@@ -114,6 +124,14 @@ public class Userview extends HttpServlet {
 				  {
 					  e.printStackTrace();
 				  }
+				
+			}
+			
+			else
+			{
+				String zero = "zero";
+				session.setAttribute("fromupdatereview3", zero);
+				usr =  (String) session.getAttribute("curuser");
 				
 			}
 			

@@ -39,8 +39,15 @@ public class Updatereview3 extends HttpServlet {
 		  	
 			HttpSession session = request.getSession();
 			
+			
+			String one = "one";
+			session.setAttribute("fromupdatereview3", one );
+			
+			
 			String curuser = (String) session.getAttribute("curuser");
 			int currest = (Integer) session.getAttribute("creview");
+			
+			
 			
 			String ncomment = request.getParameter("ncomment");
 			String temp_nrating = request.getParameter("nrating");
@@ -99,7 +106,7 @@ public class Updatereview3 extends HttpServlet {
 		        
 	      
 	      getServletContext()
-	      	.getRequestDispatcher("/home.jsp")
+	      	.getRequestDispatcher("/Userview")
 	      	.forward(request, response);
 	 
 	   }
